@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model User {
   id    Int     @default(autoincrement()) @id
   email String  @unique
@@ -21,7 +26,3 @@ model Post {
   authorId  Int?
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
