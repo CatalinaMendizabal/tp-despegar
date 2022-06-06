@@ -10,6 +10,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Product {
+    id    Int     @default(autoincrement()) @id
+    departureAirport String
+    arrivalAirport String
+    departurePlace String
+    arrivalPlace String
+    outgoing Boolean
+    price Int
+    passangers Int
+    tax Int
+    flights Flight[]
+}
+
+enum Luggage {
+    BACKPACK
+    CARRY_ON
+    SUITCASE
+}
+
+enum ClassType {
+    ECONOMY
+    FIRST
+    BUSINESS
+}
+
+
+model Flight {
+    id    Int     @default(autoincrement()) @id
+    company String
+    departureHour DateTime
+    arrivalHour DateTime
+    stopOver Flight[]
+    luggage Luggage[]
+    type ClassType
+}
+
+
+
+
+
+
+
+
 model User {
   id    Int     @default(autoincrement()) @id
   email String  @unique
