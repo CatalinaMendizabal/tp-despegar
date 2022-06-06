@@ -11,61 +11,54 @@ datasource db {
 }
 
 model Product {
-    id    Int     @default(autoincrement()) @id
-    departureAirport String
-    arrivalAirport String
-    departurePlace String
-    arrivalPlace String
-    outgoing Boolean
-    price Int
-    passangers Int
-    tax Int
-    flights Flight[]
+  id               Int      @id @default(autoincrement())
+  departureAirport String
+  arrivalAirport   String
+  departurePlace   String
+  arrivalPlace     String
+  outgoing         Boolean
+  price            Int
+  passangers       Int
+  tax              Int
+  flights          Flight[]
 }
 
 enum Luggage {
-    BACKPACK
-    CARRY_ON
-    SUITCASE
+  BACKPACK
+  CARRY_ON
+  SUITCASE
 }
 
 enum ClassType {
-    ECONOMY
-    FIRST
-    BUSINESS
+  ECONOMY
+  FIRST
+  BUSINESS
 }
-
 
 model Flight {
-    id    Int     @default(autoincrement()) @id
-    company String
-    departureHour DateTime
-    arrivalHour DateTime
-    stopOver Flight[]
-    luggage Luggage[]
-    type ClassType
+  id            Int       @id @default(autoincrement())
+  company       String
+  departureHour DateTime
+  arrivalHour   DateTime
+  //    stopOver Flight[]
+  luggage       Luggage[]
+  type          ClassType
+  Product       Product?  @relation(fields: [productId], references: [id])
+  productId     Int?
 }
 
-
-
-
-
-
-
-
 model User {
-  id    Int     @default(autoincrement()) @id
+  id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
   posts Post[]
 }
 
 model Post {
-  id        Int     @default(autoincrement()) @id
+  id        Int     @id @default(autoincrement())
   title     String
   content   String?
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
-
