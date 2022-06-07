@@ -24,15 +24,15 @@ model Product {
 }
 
 enum Luggage {
-    BACKPACK
-    CARRY_ON
-    SUITCASE
+  BACKPACK
+  CARRY_ON
+  SUITCASE
 }
 
 enum ClassType {
-    ECONOMY
-    FIRST
-    BUSINESS
+  ECONOMY
+  FIRST
+  BUSINESS
 }
 
 model Flight {
@@ -71,4 +71,3 @@ model Post {
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
-
