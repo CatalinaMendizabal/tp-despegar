@@ -1,13 +1,8 @@
-import { PrismaClient } from '@prisma/client'
-import express from 'express'
+import { Router } from 'express';
+import productRouter from "./main/routes/ProductRouter";
 
-const prisma = new PrismaClient()
-const app = express()
+const routes = Router();
 
-app.use(express.json())
+routes.use('/products', productRouter);
 
-// ... your REST API routes will go here
-
-app.listen(3000, () =>
-    console.log('REST API server ready at: http://localhost:3000'),
-)
+export default routes;

@@ -17,9 +17,9 @@ model Product {
     departurePlace String
     arrivalPlace String
     outgoing Boolean
-    price Int
-    passangers Int
-    tax Int
+    price Float
+    passengers Int
+    tax Float
     flights Flight[]
 }
 
@@ -35,15 +35,18 @@ enum ClassType {
     BUSINESS
 }
 
-
 model Flight {
     id    Int     @default(autoincrement()) @id
     company String
     departureHour DateTime
     arrivalHour DateTime
-    stopOver Flight[]
     luggage Luggage[]
     type ClassType
+    productId Int
+    product Product @relation(fields: [productId], references: [id])
+    stopId Int?
+    stop   Flight?   @relation("OverStop", fields: [stopId], references: [id])
+    overStop  Flight[]  @relation("OverStop")
 }
 
 
