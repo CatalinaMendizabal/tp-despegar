@@ -36,6 +36,14 @@ export default class ProductService {
         });
     }
 
+    deleteProduct = async (id: number): Promise<Product> => {
+        return await prisma.product.delete({
+            where: {
+                id: Number(id)
+            }
+        });
+    }
+
     deleteAllProducts = async (): Promise<Product[]> => {
         return await prisma.product.deleteMany({})
     }

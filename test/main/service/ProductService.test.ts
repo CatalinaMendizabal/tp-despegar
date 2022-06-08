@@ -40,7 +40,7 @@ describe("Test Get Products", () => {
     it('should return all products', async () => {
         const products = await productService.getProducts();
         expect(products).not.toBeNull();
-        expect(products.length).toBe(1);
+        expect(products.length).toBe(2);
     });
 
 });
@@ -106,4 +106,11 @@ describe("Test Get Product", () => {
         expect(aProduct.passengers).toBeDefined();
         expect(aProduct.passengers).toBeGreaterThan(0);
     });
+
+    it('should delete a product', async () => {
+        await productService.deleteProduct(1);
+        const getProduct = await productService.getProduct(1);
+        expect(getProduct).toBeNull();
+    });
+
 });
