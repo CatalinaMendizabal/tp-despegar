@@ -15,7 +15,7 @@ export default class ProductService {
                 outgoing: product.outgoing,
                 price: product.price,
                 passengers: product.passengers,
-                tax: product.tax,
+                tax: product.tax
             }
         })
     }

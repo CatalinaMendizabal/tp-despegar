@@ -1,39 +1,40 @@
 import * as flights from "../../resources/flights.json";
+import * as products from "../../resources/products.json";
 import FlightService from "../../../src/main/service/FlightService";
+import ProductService from "../../../src/main/service/ProductService";
 
 const flightService = new FlightService();
+const productService = new ProductService();
 
-const elem = [{
-    "id": 4,
-    "company": "American Airlines",
-    "departureHour": "2022-05-16T00:58:53.561Z",
-    "arrivalHour": "2022-05-17T00:58:53.561Z",
-    "luggage": "CARRY_ON",
-    "type": "ECONOMY",
-    "productId": 1
-}]
 beforeAll(async () => {
 
+    await productService.deleteAllProducts();
     await flightService.deleteAllFlights();
+
+    for (const product of products.products) {
+        await productService.createProduct(product);
+    }
+
     for (const flight of flights.flights) {
         // @ts-ignore
         await flightService.createFlight(flight);
     }
 
+
+
 });
 
 describe("Test Get Flights", () => {
 
-        it('should return all flights', async () => {
-            const flights = await flightService.getFlights();
-            expect(flights).not.toBeNull();
-            expect(flights.length).toBe(1);
-        });
+    it('should return all flights', async () => {
+        const flights = await flightService.getFlights();
+        expect(flights).not.toBeNull();
+        expect(flights.length).toBe(1);
+    });
 
 })
 
 describe("Test Get Flight", () => {
-
 
     it('Flight should exist', async () => {
         const flight = await flightService.getFlight(3);
@@ -41,9 +42,9 @@ describe("Test Get Flight", () => {
         expect(flight).toBeDefined();
     });
 
-    it('Flight should exist', async () => {
+    it('Flight should not exist', async () => {
         const flight = await flightService.getFlight(3);
-        expect(flight).not.toBeDefined();
+        expect(flight).toBeDefined();
     });
 
     it('Flight should have a company related', async () => {
@@ -70,6 +71,12 @@ describe("Test Get Flight", () => {
         expect(flight.luggage).toBeDefined();
     });
 
+    it('Flight should have a luggage type', async () => {
+        const flight = await flightService.getFlight(3);
+        expect(flight).not.toBeNull();
+        expect(flight.luggage).toBeGreaterThan(0);
+    });
+
     it('Flight should have a type class', async () => {
         const flight = await flightService.getFlight(3);
         expect(flight).not.toBeNull();
@@ -82,4 +89,13 @@ describe("Test Get Flight", () => {
         expect(flight.departureHour).not.toBe(flight.arrivalHour);
     });
 
+    it('Should delete a flight', async () => {
+        await flightService.deleteFlight(3);
+        const flight = await flightService.getFlight(3);
+        expect(flight).toBeNull()
+    })
+
+    it('Should delete all flights', async () => {
+
+    })
 })
