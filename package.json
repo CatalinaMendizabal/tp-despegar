@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "node dist/app.js",
     "build": "tsc",
-    "prestart": "npx prisma generate"
+    "prestart": "npx prisma generate",
+    "pretest": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

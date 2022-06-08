@@ -6,10 +6,10 @@ const flightService = new FlightService();
 
 export default class FlightController {
 
-    public async getProducts(res: any) {
+    public async getFlights(res: any) {
         try {
-            const products = await flightService.getFlights();
-            return res.status(200).json(products);
+            const flights = await flightService.getFlights();
+            return res.status(200).json(flights);
         } catch (e) {
             return res.status(400).json(e);
         }
