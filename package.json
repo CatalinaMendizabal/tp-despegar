@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node dist/src/app.js",
-    "build": "tsc"
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "prestart": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

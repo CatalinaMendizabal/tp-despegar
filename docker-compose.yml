@@ -10,5 +10,16 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5433:5432'
+
+  api:
+    image: despegar/api
+    container_name: "despegar-api"
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    ports:
+      - '3000:3000'
 volumes:
   postgres:
