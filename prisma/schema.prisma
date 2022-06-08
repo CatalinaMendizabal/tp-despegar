@@ -11,16 +11,16 @@ datasource db {
 }
 
 model Product {
-  id               Int      @id @default(autoincrement())
-  departureAirport String
-  arrivalAirport   String
-  departurePlace   String
-  arrivalPlace     String
-  outgoing         Boolean
-  price            Int
-  passangers       Int
-  tax              Int
-  flights          Flight[]
+    id    Int     @default(autoincrement()) @id
+    departureAirport String
+    arrivalAirport String
+    departurePlace String
+    arrivalPlace String
+    outgoing Boolean
+    price Float
+    passengers Int
+    tax Float
+    flights Flight[]
 }
 
 enum Luggage {
@@ -36,29 +36,42 @@ enum ClassType {
 }
 
 model Flight {
-  id            Int       @id @default(autoincrement())
-  company       String
-  departureHour DateTime
-  arrivalHour   DateTime
-  //    stopOver Flight[]
-  luggage       Luggage[]
-  type          ClassType
-  Product       Product?  @relation(fields: [productId], references: [id])
-  productId     Int?
+    id    Int     @default(autoincrement()) @id
+    company String
+    departureHour DateTime
+    arrivalHour DateTime
+    luggage Luggage[]
+    type ClassType
+    productId Int
+    product Product @relation(fields: [productId], references: [id])
+    overStop  OverStop[]
 }
 
+model OverStop {
+    id    Int     @default(autoincrement()) @id
+    company String
+    departureHour DateTime
+    arrivalHour DateTime
+    luggage Luggage[]
+    type ClassType
+    flightId Int
+    flight Flight @relation(fields: [flightId], references: [id])
+}
+
+
 model User {
-  id    Int     @id @default(autoincrement())
+  id    Int     @default(autoincrement()) @id
   email String  @unique
   name  String?
   posts Post[]
 }
 
 model Post {
-  id        Int     @id @default(autoincrement())
+  id        Int     @default(autoincrement()) @id
   title     String
   content   String?
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
+

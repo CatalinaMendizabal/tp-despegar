@@ -1,0 +1,22 @@
+{
+  "flights": [
+    {
+      "id": 3,
+      "company": "Lufthansa",
+      "departureHour": "2022-05-16T00:58:53.561Z",
+      "arrivalHour": "2022-05-17T00:58:53.561Z",
+      "luggage": "CARRY_ON",
+      "type": "ECONOMY",
+      "productId": 1,
+      "overStop": [{
+        "id": 4,
+        "company": "American Airlines",
+        "departureHour": "2022-05-16T00:58:53.561Z",
+        "arrivalHour": "2022-05-17T00:58:53.561Z",
+        "luggage": "CARRY_ON",
+        "type": "ECONOMY",
+        "productId": 1
+      }]
+    }
+  ]
+}

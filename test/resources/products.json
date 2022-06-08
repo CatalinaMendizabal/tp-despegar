@@ -1,0 +1,15 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "departureAirport": "EZE",
+      "arrivalAirport": "CDG",
+      "departurePlace": "Buenos Aires",
+      "arrivalPlace": "Paris",
+      "outgoing": true,
+      "price": 1014.060,
+      "passengers": 1,
+      "tax": 450
+    }
+  ]
+}
