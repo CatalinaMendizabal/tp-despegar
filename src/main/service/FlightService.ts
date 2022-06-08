@@ -22,7 +22,7 @@ export default class FlightService {
     getFlights = async (): Promise<Flight[]> => {
         return await prisma.flight.findMany({
             include: {
-                product: true,
+                flight: true,
             }
         })
     }
