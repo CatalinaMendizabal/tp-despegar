@@ -1,6 +1,4 @@
-import {Flight, Product} from '@prisma/client';
-import {create} from "domain";
-
+import {Flight} from '@prisma/client';
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 

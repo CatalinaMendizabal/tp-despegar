@@ -25,6 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+        #pending commands for tests to run correctly
+
       - name: Run the tests and generate coverage report
         run: npm test -- --coverage
 
