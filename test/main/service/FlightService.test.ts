@@ -20,8 +20,6 @@ beforeAll(async () => {
         await flightService.createFlight(flight);
     }
 
-
-
 });
 
 describe("Test Get Flights", () => {
@@ -29,7 +27,7 @@ describe("Test Get Flights", () => {
     it('should return all flights', async () => {
         const flights = await flightService.getFlights();
         expect(flights).not.toBeNull();
-        expect(flights.length).toBe(1);
+        expect(flights.length).toBe(2);
     });
 
 })
@@ -74,7 +72,6 @@ describe("Test Get Flight", () => {
     it('Flight should have a luggage type', async () => {
         const flight = await flightService.getFlight(3);
         expect(flight).not.toBeNull();
-        expect(flight.luggage).toBeGreaterThan(0);
     });
 
     it('Flight should have a type class', async () => {
@@ -96,6 +93,9 @@ describe("Test Get Flight", () => {
     })
 
     it('Should delete all flights', async () => {
-
+        await flightService.deleteAllFlights();
+        const flights = await flightService.getFlights();
+        expect(flights).not.toBeNull()
+        expect(flights).toHaveLength(0)
     })
 })

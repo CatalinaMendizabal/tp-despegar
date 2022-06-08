@@ -5,7 +5,6 @@ import ProductService from "../../../src/main/service/ProductService";
 import IResponse from "../../resources/IResponse";
 import FlightController from "../../../src/main/controller/FlightController";
 
-
 const flightService = new FlightService();
 const productService = new ProductService();
 const flightController = new FlightController()

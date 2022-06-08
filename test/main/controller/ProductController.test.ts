@@ -6,6 +6,7 @@ const productController = new ProductController();
 const productService = new ProductService();
 
 beforeAll(async () => {
+
     await productService.deleteAllProducts();
 
     for (const product of products.products) {
@@ -26,7 +27,6 @@ describe("Test product controller", () => {
         const response = await productController.getProduct(1, res);
         expect(response.status).toBe(200);
     });
-
     it("should return a response with 200 status when delete product", async () => {
         const res : IResponse = new IResponse({})
         const response = await productController.deleteProduct(1, res);

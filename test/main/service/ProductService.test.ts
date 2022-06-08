@@ -22,19 +22,6 @@ beforeAll(async () => {
 
 });
 
-/*
-    * seleccionar un producto y que exista OK
-    * seleccionar un producto y que no exista OK
-    * tiene pasajeros OK
-    * tiene precio OK
-    * tiene tax OK
-    * tiene aep destino y origen OK
-    * tiene ida
-    * viaje solo de ida
-    * fecha de salida
-    * fehca de llegada
- */
-
 describe("Test Get Products", () => {
 
     it('should return all products', async () => {
@@ -53,10 +40,6 @@ describe("Test Get Product", () => {
         expect(aProduct).toBeDefined();
     });
 
-    it('should exist the product', async () => {
-        const aProduct = await productService.getProduct(2);
-        expect(aProduct).not.toBeDefined();
-    });
 
     it('should have departure airport', async () => {
         const aProduct = await productService.getProduct(1);
