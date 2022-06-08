@@ -1,5 +1,4 @@
 import {Product} from '@prisma/client';
-import {create} from "domain";
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
@@ -40,5 +39,4 @@ export default class ProductService {
     deleteAllProducts = async (): Promise<Product[]> => {
         return await prisma.product.deleteMany({})
     }
-
 }

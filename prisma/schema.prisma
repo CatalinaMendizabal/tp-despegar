@@ -44,16 +44,19 @@ model Flight {
     type ClassType
     productId Int
     product Product @relation(fields: [productId], references: [id])
-    stopId Int?
-    stop   Flight?   @relation("OverStop", fields: [stopId], references: [id])
-    overStop  Flight[]  @relation("OverStop")
+    overStop  OverStop[]
 }
 
-
-
-
-
-
+model OverStop {
+    id    Int     @default(autoincrement()) @id
+    company String
+    departureHour DateTime
+    arrivalHour DateTime
+    luggage Luggage[]
+    type ClassType
+    flightId Int
+    flight Flight @relation(fields: [flightId], references: [id])
+}
 
 
 model User {
@@ -71,3 +74,4 @@ model Post {
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
+

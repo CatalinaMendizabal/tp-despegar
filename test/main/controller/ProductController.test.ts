@@ -3,18 +3,6 @@ import IResponse from "../../resources/IResponse";
 const productController = new ProductController();
 
 beforeAll(async () => {
-   /* await bookingStatusInfoService.deleteBookingStatusInfo();
-    await patientStatusInfoService.deletePatientStatusInfo();
-    await bookingService.deleteBookings();
-    await patientService.deletePatients();
-    await patientService.treatmentService.deleteTreatments();
-    await clinicService.deleteClinics();
-
-    for (const treatment of treatments.treatments) {
-        // @ts-ignore
-        await patientService.treatmentService.createTreatment(treatment);
-    }*/
-
 });
 
 describe("Test Get Treatments", () => {
