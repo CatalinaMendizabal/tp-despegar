@@ -37,6 +37,14 @@ export default class FlightService {
         });
     }
 
+    deleteFlight = async (id: number): Promise<Flight> => {
+        return await prisma.flight.delete({
+            where: {
+                id: Number(id)
+            }
+        });
+    }
+
     deleteAllFlights = async (): Promise<Flight[]> => {
         return await prisma.flight.deleteMany({})
     }
