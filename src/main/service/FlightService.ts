@@ -1,4 +1,4 @@
-import {Flight} from '@prisma/client';
+import {Flight, Product} from '@prisma/client';
 import {create} from "domain";
 
 const {PrismaClient} = require('@prisma/client');
@@ -27,6 +27,14 @@ export default class FlightService {
                 product: true,
             }
         })
+    }
+
+    getFlight = async (id: number): Promise<Flight> => {
+        return await prisma.flight.findFirst({
+            where: {
+                id: Number(id)
+            }
+        });
     }
 
     deleteAllFlights = async (): Promise<Flight[]> => {
