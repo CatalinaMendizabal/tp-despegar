@@ -1,14 +1,23 @@
 import ProductService from "../../../src/main/service/ProductService";
 import * as products from "../../resources/products.json";
+import * as flights from "../../resources/flights.json";
+import FlightService from "../../../src/main/service/FlightService";
 
 const productService = new ProductService();
+const flightService = new FlightService();
 
 beforeAll(async () => {
 
+    await flightService.deleteAllFlights()
     await productService.deleteAllProducts();
 
     for (const product of products.products) {
         await productService.createProduct(product);
+    }
+
+    for (const flight of flights.flights) {
+        // @ts-ignore
+        await flightService.createFlight(flight);
     }
 
 });
@@ -97,12 +106,4 @@ describe("Test Get Product", () => {
         expect(aProduct.passengers).toBeDefined();
         expect(aProduct.passengers).toBeGreaterThan(0);
     });
-
-/*    it('should have flights', async () => {
-        const aProduct = await productService.getProduct(1);
-        expect(aProduct).not.toBeNull();
-        expect(aProduct.flights).toBeDefined();
-        expect(aProduct.flights.length).toBeGreaterThan(0);
-    })*/
-
 });

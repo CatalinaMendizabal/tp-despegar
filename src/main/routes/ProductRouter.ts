@@ -5,14 +5,12 @@ const productRouter = Router();
 const productController = new ProductController()
 
 productRouter.get('/', async (req: any, res: { send: (arg0: { message: string; }) => void; }) => {
-    res.send({message: '??????'});
+    await productController.getProducts(res);
 });
 
-/*
-
-treatmentRouter.get('/',async (req: any, res: any) => {
-    if(SecureHeaderValidator.validateReq(req, res)) await treatmentController.getTreatments(res);
+productRouter.get('/:id', async (req: any, res: { send: (arg0: { message: string; }) => void; }) => {
+    const {id} = req.params;
+    await productController.getProduct(id, res);
 });
- */
 
 export default productRouter;
