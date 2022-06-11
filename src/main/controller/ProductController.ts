@@ -11,8 +11,8 @@ export default class ProductController {
         try {
             const newProduct = await productService.createProduct(product);
             return res.status(200).json(newProduct);
-        } catch (e) {
-            return res.status(400).json(e);
+        } catch (e: any) {
+            return res.status(400).json(e.message);
         }
     }
 
@@ -20,8 +20,8 @@ export default class ProductController {
         try {
             const products = await productService.getProducts();
             return res.status(200).json(products);
-        } catch (e) {
-            return res.status(400).json(e);
+        } catch (e: any) {
+            return res.status(400).json(e.message);
         }
     }
 

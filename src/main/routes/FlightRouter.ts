@@ -5,11 +5,11 @@ import productRouter from "./ProductRouter";
 const flightRouter = Router();
 const flightController = new FlightController()
 
-flightRouter.get('/', async (req: any, res: { send: (arg0: { message: string; }) => void; }) => {
+flightRouter.get('/', async (req: any, res: any)  => {
     await flightController.getFlights(res);
 });
 
-productRouter.get('/:id', async (req: any, res: { send: (arg0: { message: string; }) => void; }) => {
+productRouter.get('/:id', async (req: any, res: any) => {
     const {id} = req.params;
     await flightController.getFlight(id, res);
 });
