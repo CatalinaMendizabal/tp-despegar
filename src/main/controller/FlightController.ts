@@ -1,15 +1,17 @@
 import FlightService from "../service/FlightService";
 import {Flight} from "@prisma/client";
-
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient();
-const flightService = new FlightService();
+import {Context} from '../../../config/context';
 
 export default class FlightController {
+    flightService: FlightService;
+
+    constructor(ctx: Context) {
+        this.flightService =  new FlightService(ctx);
+    }
 
     public async createFlight(flight: Flight, res: any) {
         try {
-            const newPatient = await flightService.createFlight(flight);
+            const newPatient = await this.flightService.createFlight(flight);
             return res.status(200).json(newPatient);
         } catch (e) {
             return res.status(400).json(e);
@@ -18,7 +20,7 @@ export default class FlightController {
 
     public async getFlights(res: any) {
         try {
-            const flights = await flightService.getFlights();
+            const flights = await this.flightService.getFlights();
             return res.status(200).json(flights);
         } catch (e) {
             return res.status(400).json(e);
@@ -27,7 +29,7 @@ export default class FlightController {
 
     public async getFlight(id: number, res: any) {
         try {
-            const product = await flightService.getFlight(id);
+            const product = await this.flightService.getFlight(id);
             if (product === null) return res.status(404).json({message: "Flight not found"});
             else return res.status(200).json(product);
         } catch (e) {
@@ -37,7 +39,7 @@ export default class FlightController {
 
     public async deleteFlight(id: number, res: any) {
         try {
-            const flight = await flightService.deleteFlight(id);
+            const flight = await this.flightService.deleteFlight(id);
             return res.status(200).json(flight);
         } catch (e) {
             return res.status(400).json(e);
@@ -46,7 +48,7 @@ export default class FlightController {
 
     public async deleteAllFlights(res: any) {
         try {
-            const flights = await flightService.deleteAllFlights();
+            const flights = await this.flightService.deleteAllFlights();
             return res.status(200).json(flights);
         } catch (e) {
             return res.status(400).json(e);

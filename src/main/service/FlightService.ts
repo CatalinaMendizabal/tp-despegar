@@ -1,14 +1,15 @@
-import {Flight, Product} from '@prisma/client';
-import {create} from "domain";
-
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient();
+import {Flight} from '@prisma/client';
+import {Context} from '../../../config/context';
 
 export default class FlightService {
+    ctx: Context;
+
+    constructor(ctx: Context) {
+        this.ctx = ctx;
+    }
 
     createFlight = async (flight: Flight): Promise<Flight> => {
-
-        return await prisma.flight.create({
+        return await this.ctx.prisma.flight.create({
             data: {
                 id: flight.id,
                 company: flight.company,
@@ -22,15 +23,15 @@ export default class FlightService {
     }
 
     getFlights = async (): Promise<Flight[]> => {
-        return await prisma.flight.findMany({
+        return await this.ctx.prisma.flight.findMany({
             include: {
                 product: true,
             }
         })
     }
 
-    getFlight = async (id: number): Promise<Flight> => {
-        return await prisma.flight.findFirst({
+    getFlight = async (id: number): Promise<Flight | null> => {
+        return await this.ctx.prisma.flight.findFirst({
             where: {
                 id: Number(id)
             }
@@ -38,14 +39,18 @@ export default class FlightService {
     }
 
     deleteFlight = async (id: number): Promise<Flight> => {
-        return await prisma.flight.delete({
+        return await this.ctx.prisma.flight.delete({
             where: {
                 id: Number(id)
             }
         });
     }
 
-    deleteAllFlights = async (): Promise<Flight[]> => {
-        return await prisma.flight.deleteMany({})
+    deleteAllFlights = async (): Promise<BatchPayload> => {
+        return await this.ctx.prisma.flight.deleteMany({})
     }
+}
+
+type BatchPayload = {
+    count: number
 }

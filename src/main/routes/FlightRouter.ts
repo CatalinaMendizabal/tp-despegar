@@ -1,9 +1,10 @@
 import {Router} from 'express';
 import FlightController from "../controller/FlightController";
 import productRouter from "./ProductRouter";
+import {getContext} from "../../../config/context";
 
 const flightRouter = Router();
-const flightController = new FlightController()
+const flightController = new FlightController(getContext())
 
 flightRouter.get('/', async (req: any, res: any)  => {
     await flightController.getFlights(res);
