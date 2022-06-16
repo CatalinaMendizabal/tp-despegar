@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 import productRouter from "./main/routes/ProductRouter";
 import flightRouter from "./main/routes/FlightRouter";
 
