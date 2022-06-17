@@ -1,29 +1,31 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:16'
-            args '-p 3000:3000'
-        }
+    agent any
+
+    tools {
+        nodejs "Node Js 16"
     }
+
     environment {
-        CI = 'true'
+        DATABASE_URL = 'postgresql://sa:password@despegar-db:5432/tp-despegar'
     }
+
     stages {
         stage('Build') {
             steps {
+                git branch: 'main', credentialsId: '9d343731-3a1b-469d-afc7-fa91c94303bc', url: 'git@github.com:CatalinaMendizabal/tp-despegar.git'
                 sh 'npm install'
             }
         }
         stage('Test') {
             steps {
+                sh 'chmod -R 777 ./jenkins/scripts/test.sh'
                 sh './jenkins/scripts/test.sh'
             }
         }
         stage('Deliver') {
             steps {
+                sh 'chmod -R 777 ./jenkins/scripts/deliver.sh'
                 sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
             }
         }
     }
