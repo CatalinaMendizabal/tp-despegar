@@ -14,8 +14,8 @@ pipeline {
             steps {
                 sh '''
                     docker info
-                    docker -v
-                    docker-compose -v
+                    docker version
+                    docker-compose version
                     curl --version
                 '''
             }
