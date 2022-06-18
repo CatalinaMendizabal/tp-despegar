@@ -15,16 +15,6 @@ pipeline {
     }
 
     stages {
-        stage('verify tooling') {
-            steps {
-                sh '''
-                    docker info
-                    docker version
-                    docker-compose version
-                    curl --version
-                '''
-            }
-        }
         stage('Build') {
             steps {
                 git branch: 'main', credentialsId: '9d343731-3a1b-469d-afc7-fa91c94303bc', url: 'git@github.com:CatalinaMendizabal/tp-despegar.git'
