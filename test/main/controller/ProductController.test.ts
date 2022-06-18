@@ -1,20 +1,33 @@
 import ProductController from "../../../src/main/controller/ProductController";
 import IResponse from "../../resources/IResponse";
-import ProductService from "../../../src/main/service/ProductService";
-import * as products from "../../resources/products.json";
-const productController = new ProductController();
-const productService = new ProductService();
+import {Context, createMockContext, MockContext} from "../../../config/context";
+import {Product} from "@prisma/client";
+import * as jsonProducts from "../../resources/products.json";
+
+let mockCtx: MockContext;
+let ctx: Context;
+let products: Product[];
+let productController: ProductController;
 
 beforeAll(async () => {
+    products = [];
 
-    await productService.deleteAllProducts();
+    for (const product of jsonProducts.products) products.push(product);
+});
 
-    for (const product of products.products) {
-        await productService.createProduct(product);
-    }
+beforeEach(() => {
+    mockCtx = createMockContext()
+    ctx = mockCtx as unknown as Context
+
+    productController = new ProductController(ctx);
 });
 
 describe("Test product controller", () => {
+    beforeEach(async () => {
+        mockCtx.prisma.product.findMany.mockResolvedValue(products);
+        mockCtx.prisma.product.findFirst.mockResolvedValue(products[0]);
+        mockCtx.prisma.product.delete.mockResolvedValue(products[0]);
+    });
 
     it("should return a response with 200 status when get products", async () => {
         const res : IResponse = new IResponse({})
@@ -27,6 +40,7 @@ describe("Test product controller", () => {
         const response = await productController.getProduct(1, res);
         expect(response.status).toBe(200);
     });
+
     it("should return a response with 200 status when delete product", async () => {
         const res : IResponse = new IResponse({})
         const response = await productController.deleteProduct(1, res);
@@ -40,6 +54,7 @@ describe("Test product controller", () => {
     });
 
     it("should return a response with 400 status when create product", async () => {
+        mockCtx.prisma.product.create.mockRejectedValue(new Error("Can't create"));
         const res : IResponse = new IResponse({})
         // @ts-ignore
         const response = await productController.createProduct({}, res);
@@ -47,6 +62,7 @@ describe("Test product controller", () => {
     });
 
     it('should return a response with 200 when create product', async () => {
+        mockCtx.prisma.product.create.mockResolvedValue(products[0]);
         const res : IResponse = new IResponse({})
         const product = {
             "id": 7,

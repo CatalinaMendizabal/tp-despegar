@@ -1,29 +1,39 @@
-import * as flights from "../../resources/flights.json";
-import * as products from "../../resources/products.json";
-import FlightService from "../../../src/main/service/FlightService";
-import ProductService from "../../../src/main/service/ProductService";
 import IResponse from "../../resources/IResponse";
 import FlightController from "../../../src/main/controller/FlightController";
+import {Context, createMockContext, MockContext} from "../../../config/context";
+import {Flight, Product} from "@prisma/client";
+import * as jsonProducts from "../../resources/products.json";
+import * as jsonFlights from "../../resources/flights.json";
 
-const flightService = new FlightService();
-const productService = new ProductService();
-const flightController = new FlightController()
+let mockCtx: MockContext;
+let ctx: Context;
+let products: Product[];
+let flights: Flight[];
+let flightController: FlightController;
 
 beforeAll(async () => {
-    await productService.deleteAllProducts();
-    await flightService.deleteAllFlights();
+    products = [];
+    flights = [];
 
-    for (const product of products.products) {
-        await productService.createProduct(product);
-    }
+    for (const product of jsonProducts.products) products.push(product);
 
-    for (const flight of flights.flights) {
-        // @ts-ignore
-        await flightService.createFlight(flight);
-    }
+    // @ts-ignore
+    for (const flight of jsonFlights.flights) flights.push(flight);
+});
+
+beforeEach(() => {
+    mockCtx = createMockContext()
+    ctx = mockCtx as unknown as Context
+
+    flightController = new FlightController(ctx);
 });
 
 describe("Test flight controller", () => {
+    beforeEach(async () => {
+        mockCtx.prisma.flight.findMany.mockResolvedValue(flights);
+        mockCtx.prisma.flight.findFirst.mockResolvedValue(flights[0]);
+        mockCtx.prisma.flight.delete.mockResolvedValue(flights[0]);
+    });
 
     it("should return a response with 200 when get all flights", async () => {
         const res : IResponse = new IResponse({})
@@ -50,6 +60,7 @@ describe("Test flight controller", () => {
     });
 
     it("should return a response with 400 when create flight", async () => {
+        mockCtx.prisma.flight.create.mockRejectedValue(new Error("Can't create"));
         const res : IResponse = new IResponse({})
         // @ts-ignore
         const response = await flightController.createFlight({}, res);
@@ -57,6 +68,7 @@ describe("Test flight controller", () => {
     });
 
     it('should return a response with 200 when create flight', async () => {
+        mockCtx.prisma.flight.create.mockResolvedValue(flights[0]);
         const res : IResponse = new IResponse({})
         const flight = {
             "id": 99,
