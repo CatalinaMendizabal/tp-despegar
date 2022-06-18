@@ -9,7 +9,7 @@
     "build": "tsc",
     "prestart": "npx prisma generate",
     "pretest": "npx prisma generate",
-    "run-cypress": "cypress open"
+    "cypress:open": "cypress open"
   },
   "keywords": [],
   "author": "",
