@@ -20,7 +20,6 @@ model Product {
     price Float
     passengers Int
     tax Float
-    flights Flight[]
 }
 
 enum Luggage {
@@ -40,22 +39,10 @@ model Flight {
     company String
     departureHour DateTime
     arrivalHour DateTime
+    departurePlace String
+    arrivalPlace String
     luggage Luggage[]
     type ClassType
-    productId Int
-    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-    overStop  OverStop[]
-}
-
-model OverStop {
-    id    Int     @default(autoincrement()) @id
-    company String
-    departureHour DateTime
-    arrivalHour DateTime
-    luggage Luggage[]
-    type ClassType
-    flightId Int
-    flight Flight @relation(fields: [flightId], references: [id])
 }
 
 

@@ -12,17 +12,17 @@ services:
     ports:
       - '5432:5432'
 
-  api:
-    image: despegar/api
-    container_name: "despegar-api"
-    depends_on:
-      - postgres
-    env_file:
-      - ./.env
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
+ # api:
+ #   image: despegar/api
+ #   container_name: "despegar-api"
+ #   depends_on:
+ #     - postgres
+ #   env_file:
+ #     - ./.env
+ #   build:
+ #     context: ./
+ #     dockerfile: Dockerfile
+ #   ports:
+ #     - '3000:3000'
 volumes:
   postgres:
