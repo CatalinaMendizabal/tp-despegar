@@ -6,20 +6,24 @@ class WebsiteUser(HttpUser):
     wait_time = between(1, 5)
 
     @task
-    def primary_url(self):
-        self.client.get(url="/")
-
-     #tunear la url segun la que necesitemos pegarle n1 ^
+    def primaryProducts_url(self):
+        self.client.get(url="/products")
 
     @task
-    def secondary_url(self):
-        self.client.get(url="/secondary")
+    def primaryFlights_url(self):
+        self.client.get(url="/flights")
 
-     #tunear la url segun la que necesitemos pegarle n2 ^
+    @task
+    def secondaryProducts_url(self):
+        self.client.get(url="/products/idEjemplo")
+
+    @task
+    def secondaryFlights_url(self):
+        self.client.get(url="/flights/idEjemplo")
 
     @task
     def tertiary_url(self):
-        self.client.get(url="/tertiary")
+        self.client.get(url="/flights/multiflight")
 
          #tunear la url segun la que necesitemos pegarle n3 ^
 
