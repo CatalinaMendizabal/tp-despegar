@@ -14,4 +14,9 @@ offerRouter.get('/:id', async (req: any, res: any) => {
     await offerController.getOffer(id, res);
 });
 
+offerRouter.post('/search', async (req: any, res: any) => {
+    const body = req.body;
+    await offerController.searchOfferByPlaceName(body, res);
+});
+
 export default offerRouter;

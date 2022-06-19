@@ -1,36 +1,39 @@
-import {Context, createMockContext, MockContext} from "../../../config/context";
-import {Offer} from "@prisma/client";
-import OfferController from "../../../src/main/controller/OfferController";
-import * as jsonOffers from "../../resources/offers.json";
-import IResponse from "../../resources/IResponse";
+import { getContext} from "../../../../config/context";
+import OfferController from "../../../../src/main/controller/OfferController";
+import * as jsonOffers from "../../../resources/offers.json";
+import * as jsonFlights from "../../../resources/flights.json";
+import IResponse from "../../../resources/IResponse";
+import {OfferService} from "../../../../src/main/service/OfferService";
+import FlightService from "../../../../src/main/service/FlightService";
 
-let mockCtx: MockContext;
-let ctx: Context;
-let offers: Offer[];
-let offerController: OfferController;
+let offers: any[] = [];
+let flights: any[] = [];
+
+const ctx = getContext()
+const offerController = new OfferController(ctx);
+const offerService = new OfferService(ctx);
+const flightService = new FlightService(ctx);
 
 beforeAll(async () => {
-    offers = [];
+
+    for (const flight of jsonFlights.flights) {
+        // @ts-ignore
+        const createdFlight = await flightService.createFlight(flight)
+        flights = [...flights, createdFlight]
+    }
 
     for (const offer of jsonOffers.offers) {
         // @ts-ignore
-        offers.push(offer);
+        const createdOffer = await offerService.createOffer(offer)
+        offers = [...offers, createdOffer]
     }
 });
 
-beforeEach(() => {
-    mockCtx = createMockContext()
-    ctx = mockCtx as unknown as Context
-
-    offerController = new OfferController(ctx);
-});
+afterAll(async () => {
+    await offerService.deleteAllOffers()
+})
 
 describe("Test offer controller", () => {
-    beforeEach(async () => {
-        mockCtx.prisma.offer.findMany.mockResolvedValue(offers);
-        mockCtx.prisma.offer.findFirst.mockResolvedValue(offers[0]);
-        mockCtx.prisma.offer.delete.mockResolvedValue(offers[0]);
-    })
 
     it("should return a response with 200 status when get offers", async () => {
         const res: IResponse = new IResponse({})
@@ -57,7 +60,6 @@ describe("Test offer controller", () => {
     })
 
     it("should return a response with 400 status when create offer", async () => {
-        mockCtx.prisma.offer.create.mockRejectedValue(new Error("Can't create"));
         const res: IResponse = new IResponse({})
         // @ts-ignore
         const response = await offerController.createOffer({}, res);
@@ -65,10 +67,15 @@ describe("Test offer controller", () => {
     })
 
     it('should return a response with 200 when create offer', async () => {
-        mockCtx.prisma.offer.create.mockResolvedValue(offers[0]);
         const res: IResponse = new IResponse({})
         const offer = {
-            flightId: 1,
+            flightId: flights[0].id,
+            ammountOfPeople: 6,
+            ammoutOfNights: 4,
+            tax: 598,
+            hotelName: "EL pepe",
+            hotelPrice: 900,
+            place: "Bahamas"
         }
         // @ts-ignore
         const response = await offerController.createOffer(offer, res);
@@ -76,14 +83,12 @@ describe("Test offer controller", () => {
     });
 
     it('should look for an offer by place name', async () => {
-        mockCtx.prisma.offer.create.mockResolvedValue(offers[0]);
         const res: IResponse = new IResponse({})
-        const response = await offerController.searchOfferByPlaceName("Place 1", res)
+        const response = await offerController.searchOfferByPlaceName("Bahamas", res)
         expect(response.status).toBe(200);
     });
 
     it('should return a response with 400 status when search offer by place name', async () => {
-        mockCtx.prisma.offer.findMany.mockResolvedValue([]);
         const res: IResponse = new IResponse({})
         const response = await offerController.searchOfferByPlaceName("azala", res)
         expect(response.status).toBe(404);

@@ -1,9 +1,9 @@
-import IResponse from "../../resources/IResponse";
-import FlightController from "../../../src/main/controller/FlightController";
-import {Context, createMockContext, MockContext} from "../../../config/context";
+import IResponse from "../../../resources/IResponse";
+import FlightController from "../../../../src/main/controller/FlightController";
+import {Context, createMockContext, MockContext} from "../../../../config/context";
 import {Flight} from "@prisma/client";
-import * as jsonFlights from "../../resources/flights.json";
-import {AmadeusGatewayMockCheck, AmadeusGatewayMockTrue} from "../../../src/main/resources/AmadeusGateway";
+import * as jsonFlights from "../../../resources/flights.json";
+import {AmadeusGatewayMockCheck, AmadeusGatewayMockTrue} from "../../../../src/main/resources/AmadeusGateway";
 
 let mockCtx: MockContext;
 let ctx: Context;

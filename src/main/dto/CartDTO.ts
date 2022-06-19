@@ -1,6 +1,10 @@
-import {FlightDTO} from "./CreateFlightDTO";
+
+export interface CreateCartDTO {
+    userId: number
+}
 
 export interface CartDTO {
+    id: number
     userId: number
-    flights: FlightDTO[]
+    flights: number[]
 }

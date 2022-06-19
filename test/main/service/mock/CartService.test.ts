@@ -1,16 +1,23 @@
-import {Context, createMockContext, MockContext} from "../../../config/context";
-import {Cart} from "@prisma/client";
-import {CartService} from "../../../src/main/service/CartService";
-import * as jsonCarts from "../../resources/carts.json";
+import {Context, createMockContext, MockContext} from "../../../../config/context";
+import {Cart, User} from "@prisma/client";
+import {CartService} from "../../../../src/main/service/CartService";
+import * as jsonCarts from "../../../resources/carts.json";
+import * as jsonUsers from "../../../resources/users.json";
 
 let mockCtx: MockContext;
 let ctx: Context;
 let carts: Cart[];
+let users: User[];
 let cartService: CartService;
 
 beforeAll(async () => {
     carts = [];
-    for (const cart of jsonCarts.carts) carts.push(cart);
+    users = [];
+    for (const user of jsonUsers.users) {
+        // @ts-ignore
+        users.push(user);
+    }
+  //  for (const cart of jsonCarts.carts) carts.push(cart);
 });
 
 beforeEach(() => {
@@ -27,11 +34,12 @@ describe("Test cart service", () => {
         mockCtx.prisma.cart.findFirst.mockResolvedValue(carts[0]);
         mockCtx.prisma.cart.delete.mockResolvedValue(carts[0]);
         mockCtx.prisma.cart.create.mockResolvedValue(carts[0]);
+        mockCtx.prisma.user.create.mockResolvedValue(users[0]);
         mockCtx.prisma.cart.update.mockResolvedValue(carts[0]);
     })
 
     it("should create a cart", async () => {
-        const cart = await cartService.createCart({userId: 1, flights: []});
+        const cart = await cartService.createCart(1);
         expect(cart).toEqual(carts[0]);
     })
 
@@ -73,7 +81,7 @@ describe("Test cart service", () => {
     })
 
     it("should delete a flight from cart", async () => {
-        const cart = await cartService.deleteFlightFromCart(1, 1);
+        const cart = await cartService.deleteAllFlightsFromCart(1, 1);
         expect(cart).toEqual(carts[0]);
     })
 

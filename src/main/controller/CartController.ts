@@ -9,9 +9,9 @@ export default class CartController {
         this.cartService = new CartService(context);
     }
 
-    public async createCart(cart: any, res: any) {
+    public async createCart(userId: number, res: any) {
         try {
-            const newCart = await this.cartService.createCart(cart);
+            const newCart = await this.cartService.createCart(userId);
             return res.status(200).json(newCart);
         } catch (e: any) {
             return res.status(400).json(e.message);
@@ -74,9 +74,9 @@ export default class CartController {
         }
     }
 
-    public async addFlightToCart(flight: any, cartId: number, res: any) {
+    public async addFlightToCart(flightId: number, cartId: number, res: any) {
         try {
-            const updatedCart = await this.cartService.addFlightToCart(flight, cartId);
+            const updatedCart = await this.cartService.addFlightToCart(flightId, cartId);
             if (updatedCart === null) return res.status(404).json({message: "Cart not found"});
             else return res.status(200).json(updatedCart);
         } catch (e) {
@@ -93,9 +93,9 @@ export default class CartController {
         }
     }
 
-    public async deleteFlightFromCart(flight: any, id: number, res: any) {
+    public async deleteFlightFromCart(flightId: number, id: number, res: any) {
         try {
-            const updatedCart = await this.cartService.deleteFlightFromCart(flight, id);
+            const updatedCart = await this.cartService.deleteAllFlightsFromCart(flightId, id);
             return res.status(200).json(updatedCart);
         } catch (e) {
             return res.status(400).json(e);

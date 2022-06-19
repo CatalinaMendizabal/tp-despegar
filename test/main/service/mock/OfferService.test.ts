@@ -1,7 +1,7 @@
-import {Context, createMockContext, MockContext} from "../../../config/context";
+import {Context, createMockContext, MockContext} from "../../../../config/context";
 import {Offer} from "@prisma/client";
-import {OfferService} from "../../../src/main/service/OfferService";
-import * as jsonOffers from "../../resources/offers.json";
+import {OfferService} from "../../../../src/main/service/OfferService";
+import * as jsonOffers from "../../../resources/offers.json";
 
 let mockCtx: MockContext;
 let ctx: Context;
