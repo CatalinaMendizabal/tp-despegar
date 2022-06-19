@@ -41,6 +41,7 @@ model Flight {
   arrivalHour    DateTime
   departurePlace String
   arrivalPlace   String
+  price          Float
   luggage        Luggage[]
   type           ClassType
   offer          Offer[]
@@ -49,31 +50,25 @@ model Flight {
   CartFlight     CartFlight[]
 }
 
-model Hotel {
-  id            Int     @id @default(autoincrement())
-  name          String
-  pricePerNight Float
-  offer         Offer[]
-}
-
 model Offer {
   id              Int    @id @default(autoincrement())
-  flightId        Int
-  flight          Flight @relation(fields: [flightId], references: [id])
-  hotelId         Int
-  hotel           Hotel  @relation(fields: [hotelId], references: [id])
+  flightId         Int
+  flight           Flight @relation(fields: [flightId], references: [id])
   ammountOfPeople Int
   ammoutOfNights  Int
   tax             Float
-  flightPrice     Float
+  flightPrice      Float
+  hotelName       String
+  hotelPrice      Float
+  place           String
 }
 
 model Cart {
   id         Int          @id @default(autoincrement())
   userId     Int          @unique
   user       User         @relation(fields: [userId], references: [id])
-  flights    Flight[]
-  CartFlight CartFlight[]
+  flights     Flight[]
+  cartFlight CartFlight[]
 }
 
 model User {
@@ -87,6 +82,6 @@ model CartFlight {
   id       Int    @id @default(autoincrement())
   cart     Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cartId   Int
-  flight   Flight @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  flightId Int
+  flight    Flight @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  flightId  Int
 }

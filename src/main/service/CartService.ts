@@ -1,4 +1,5 @@
 import {Context} from "../../../config/context";
+import {CartDTO} from "../dto/CartDTO";
 
 export class CartService {
     ctx: Context;
@@ -7,9 +8,8 @@ export class CartService {
         this.ctx = ctx;
     }
 
-    createCart = async (cart: any): Promise<any> => {
+    createCart = async (cart: CartDTO): Promise<any> => {
         return await this.ctx.prisma.cart.create({
-            // @ts-ignore
             data: cart
         })
     }
@@ -34,66 +34,65 @@ export class CartService {
         });
     }
 
-    getFlightsOnCart = async (): Promise<any> => {
-        return await this.ctx.prisma.cart.findMany({
+    getFlightsOnCart = async (cartId: number): Promise<any> => {
+
+        return await this.ctx.prisma.cart.findFirst({
+            where: {
+                id: Number(cartId)
+            },
             include: {
                 flights: true
             }
-        });
+        })
     }
 
-    getOffersOnCart = async (): Promise<any> => {
-        return await this.ctx.prisma.cart.findMany({
-            include: {
-                offers: true
-            }
-        });
-    }
-
-    getPriceOfItemsOnCart = async (): Promise<any> => {
-        const flights = await this.getFlightsOnCart();
-        const offers = await this.getOffersOnCart();
-        const price = flights.reduce((acc: any, cur: { price: any; }) => acc + cur.price, 0);
-        const offerPrice = offers.reduce((acc: any, cur: { price: any; }) => acc + cur.price, 0);
-
-        return price + offerPrice;
-    }
-
-    addFlightToCart = async (flight: any): Promise<any> => {
-        const cart = await this.ctx.prisma.cart.findFirst({
+    getCartForUser = async (id: number): Promise<any> => {
+        return await this.ctx.prisma.cart.findFirst({
             where: {
-                id: Number(flight.cartId)
+                userId: Number(id)
             }
         });
-        if (cart === null) return null;
-        else {
-            return await this.ctx.prisma.cart.update({
-                where: {
-                    id: Number(flight.cartId)
-                },
-                data: {
-                    flights: {
-                        // @ts-ignore
-                        create: {
-                            id: flight.id,
-                        }
+    }
+
+    getPriceOfItemsOnCart = async (id: number): Promise<any> => {
+        const flights = await this.getFlightsOnCart(id);
+        return flights.flights.reduce((acc: any, cur: { price: any; }) => acc + cur.price, 0);
+    }
+
+
+    addFlightToCart = async (flight: any, cartId: number): Promise<any> => {
+        return await this.ctx.prisma.cart.update({
+            where: {
+                id: Number(cartId)
+            },
+            data: {
+                flights: {
+                    connect: {
+                        id: Number(flight.id)
                     }
                 }
-            })
-        }
+            }
+        })
     }
 
 
-    deleteAllCarts = async (): Promise<any> => {
-        return await this.ctx.prisma.cart.deleteMany({})
-    }
-
-    updateCart = async (id: number, cart: any): Promise<any> => {
+    deleteFlightFromCart = async (flight: any, id: number): Promise<any> => {
         return await this.ctx.prisma.cart.update({
             where: {
                 id: Number(id)
-            },
-            data: cart
-        });
+            }
+            ,
+            data: {
+                flights: {
+                    disconnect: {
+                        id: Number(flight.id)
+                    }
+                }
+            }
+        })
+    }
+
+    deleteAllCarts = async (): Promise<any> => {
+        return await this.ctx.prisma.cart.deleteMany({})
     }
 }

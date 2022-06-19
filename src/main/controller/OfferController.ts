@@ -54,4 +54,15 @@ export default class OfferController {
             return res.status(400).json(e);
         }
     }
+
+    public async searchOfferByPlaceName(placeName: string, res: any) {
+        try {
+            const offers = await this.offerService.searchOfferByPlaceName(placeName);
+            if (offers.length === 0) return res.status(404).json({message: "Offer not found"});
+            else return res.status(200).json(offers);
+        } catch (e) {
+            return res.status(400).json(e);
+        }
+    }
+
 }

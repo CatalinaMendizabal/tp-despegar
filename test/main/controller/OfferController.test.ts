@@ -16,7 +16,6 @@ beforeAll(async () => {
         // @ts-ignore
         offers.push(offer);
     }
-
 });
 
 beforeEach(() => {
@@ -75,4 +74,18 @@ describe("Test offer controller", () => {
         const response = await offerController.createOffer(offer, res);
         expect(response.status).toBe(200);
     });
+
+    it('should look for an offer by place name', async () => {
+        mockCtx.prisma.offer.create.mockResolvedValue(offers[0]);
+        const res: IResponse = new IResponse({})
+        const response = await offerController.searchOfferByPlaceName("Place 1", res)
+        expect(response.status).toBe(200);
+    });
+
+    it('should return a response with 400 status when search offer by place name', async () => {
+        mockCtx.prisma.offer.findMany.mockResolvedValue([]);
+        const res: IResponse = new IResponse({})
+        const response = await offerController.searchOfferByPlaceName("azala", res)
+        expect(response.status).toBe(404);
+    })
 })

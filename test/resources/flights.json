@@ -8,7 +8,8 @@
       "departurePlace": "Buenos Aires",
       "arrivalPlace": "Paris",
       "luggage": ["CARRY_ON", "SUITCASE"],
-      "type": "ECONOMY"
+      "type": "ECONOMY",
+      "cartId": 1
     },
     {
       "id": 6,

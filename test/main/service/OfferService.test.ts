@@ -38,18 +38,23 @@ describe("Test Get Offers", () => {
         expect(aOffers[0]).toBe(offers[0]);
     })
 
-    it('should return an offer', async () => {
-        const aOffer = await offerService.getOffer(1);
+    it('should search an offer by place name', async function () {
+        mockCtx.prisma.offer.findMany.mockResolvedValue([offers[0]]);
+        const aOffers = await offerService.searchOfferByPlaceName('Place 1');
 
-        expect(aOffer).not.toBeNull();
-        expect(aOffer).toBeDefined();
-    })
+        expect(aOffers).not.toBeNull();
+        expect(aOffers.length).toBe(1);
+        expect(aOffers[0]).toBe(offers[0]);
+    });
 
-    it('should return null if offer does not exist', async () => {
-        const aOffer = await offerService.getOffer(3);
+    it('should not find an offer for a place name', async function () {
+        mockCtx.prisma.offer.findMany.mockResolvedValue([]);
+        const aOffers = await offerService.searchOfferByPlaceName('Place 3');
 
-        expect(aOffer).toBeNull();
-    })
+        expect(aOffers).not.toBeNull();
+        expect(aOffers).toStrictEqual([])
+    });
+
 
 })
 

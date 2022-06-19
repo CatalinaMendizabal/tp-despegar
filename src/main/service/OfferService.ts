@@ -1,9 +1,8 @@
-import { Offer } from "@prisma/client";
+import {Offer} from "@prisma/client";
 import {Context} from "../../../config/context";
 import {CreateOfferDTO} from "../dto/CreateOfferDTO";
 
 export class OfferService {
-
     ctx: Context;
 
     constructor(ctx: Context) {
@@ -40,6 +39,16 @@ export class OfferService {
     deleteAllOffers = async (): Promise<BatchPayload> => {
         return await this.ctx.prisma.offer.deleteMany({})
     }
+
+    searchOfferByPlaceName = async (place: string): Promise<Offer[]> => {
+          return await this.ctx.prisma.offer.findMany({
+            where: {
+                // @ts-ignore
+                place: place
+            }
+        })
+    }
+
 }
 
 type BatchPayload = {

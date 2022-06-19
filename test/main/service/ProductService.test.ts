@@ -21,19 +21,6 @@ beforeEach(() => {
     productService = new ProductService(ctx);
 });
 
-/*
-    * seleccionar un producto y que exista OK
-    * seleccionar un producto y que no exista OK
-    * tiene pasajeros OK
-    * tiene precio OK
-    * tiene tax OK
-    * tiene aep destino y origen OK
-    * tiene ida
-    * viaje solo de ida
-    * fecha de salida
-    * fehca de llegada
- */
-
 describe("Test Get Products", () => {
     beforeEach(async () => {
         mockCtx.prisma.product.findMany.mockResolvedValue(products);

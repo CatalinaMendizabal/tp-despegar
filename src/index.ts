@@ -8,5 +8,6 @@ const routes = Router();
 routes.use('/products', productRouter);
 routes.use('/flights', flightRouter);
 routes.use('/offers', offerRouter);
+routes.use('/cart', offerRouter);
 
 export default routes;

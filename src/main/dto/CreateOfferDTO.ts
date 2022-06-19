@@ -1,12 +1,12 @@
-import {Flight, Hotel} from "@prisma/client";
+import {Flight} from "@prisma/client";
 
 export interface CreateOfferDTO {
     flightId: number
     flight: Flight
     hotelId: number
-    hotel: Hotel
     ammountOfPeople: number
     ammoutOfNights: number
     price: number
     tax: number
+    place: string
 }
