@@ -1,0 +1,28 @@
+{
+  "offers" : [
+    {
+      "id": 1,
+      "flightId": 3,
+      "hotelId": 1,
+      "ammountOfPeople": 1,
+      "ammoutOfNights":  4,
+      "price": 450,
+      "tax":  100,
+      "hotelName": "Hotel 1",
+      "hotelPrice": 300,
+      "place": "Place 1"
+    },
+    {
+      "id": 2,
+      "flightId": 3,
+      "hotelId": 2,
+      "ammountOfPeople": 3,
+      "ammoutOfNights":  4,
+      "flightPrice": 700,
+      "tax":  100,
+      "hotelName": "Hotel 2",
+      "hotelPrice": 25,
+      "place": "Place 2"
+    }
+  ]
+}

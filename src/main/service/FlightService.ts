@@ -16,6 +16,7 @@ export default class FlightService {
                 departureHour: flight.departureHour,
                 arrivalHour: flight.arrivalHour,
                 departurePlace: flight.departurePlace,
+                price: flight.price,
                 arrivalPlace: flight.arrivalPlace,
                 luggage: flight.luggage,
                 type: flight.type

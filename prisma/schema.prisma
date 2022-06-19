@@ -11,15 +11,15 @@ datasource db {
 }
 
 model Product {
-    id    Int     @default(autoincrement()) @id
-    departureAirport String
-    arrivalAirport String
-    departurePlace String
-    arrivalPlace String
-    outgoing Boolean
-    price Float
-    passengers Int
-    tax Float
+  id               Int     @id @default(autoincrement())
+  departureAirport String
+  arrivalAirport   String
+  departurePlace   String
+  arrivalPlace     String
+  outgoing         Boolean
+  price            Float
+  passengers       Int
+  tax              Float
 }
 
 enum Luggage {
@@ -35,30 +35,53 @@ enum ClassType {
 }
 
 model Flight {
-    id    Int     @default(autoincrement()) @id
-    company String
-    departureHour DateTime
-    arrivalHour DateTime
-    departurePlace String
-    arrivalPlace String
-    luggage Luggage[]
-    type ClassType
+  id             Int          @id @default(autoincrement())
+  company        String
+  departureHour  DateTime
+  arrivalHour    DateTime
+  departurePlace String
+  arrivalPlace   String
+  price          Float
+  luggage        Luggage[]
+  type           ClassType
+  offer          Offer[]
+  Cart           Cart?        @relation(fields: [cartId], references: [id])
+  cartId         Int?
+  CartFlight     CartFlight[]
 }
 
+model Offer {
+  id              Int    @id @default(autoincrement())
+  flightId         Int
+  flight           Flight @relation(fields: [flightId], references: [id])
+  ammountOfPeople Int
+  ammoutOfNights  Int
+  tax             Float
+  flightPrice      Float
+  hotelName       String
+  hotelPrice      Float
+  place           String
+}
+
+model Cart {
+  id         Int          @id @default(autoincrement())
+  userId     Int          @unique
+  user       User         @relation(fields: [userId], references: [id])
+  flights     Flight[]
+  cartFlight CartFlight[]
+}
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
-  posts Post[]
+  id    Int    @id @default(autoincrement())
+  email String
+  name  String
+  cart  Cart?
 }
 
-model Post {
-  id        Int     @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model CartFlight {
+  id       Int    @id @default(autoincrement())
+  cart     Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartId   Int
+  flight    Flight @relation(fields: [flightId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  flightId  Int
 }
-
