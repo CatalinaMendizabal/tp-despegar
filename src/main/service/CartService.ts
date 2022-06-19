@@ -1,5 +1,6 @@
 import {Context} from "../../../config/context";
-import {CartDTO} from "../dto/CartDTO";
+import {CartDTO, CreateCartDTO} from "../dto/CartDTO";
+import {CreateUserDTO} from "../dto/UserDTO";
 
 export class CartService {
     ctx: Context;
@@ -8,9 +9,17 @@ export class CartService {
         this.ctx = ctx;
     }
 
-    createCart = async (cart: CartDTO): Promise<any> => {
+    createUser = async (user: CreateUserDTO): Promise<any> => {
+        return await this.ctx.prisma.user.create({
+            data: user
+        })
+    }
+
+    createCart = async (userId: number): Promise<any> => {
         return await this.ctx.prisma.cart.create({
-            data: cart
+            data: {
+                user: {connect: {id: Number(userId)}},
+            }
         })
     }
 
@@ -35,12 +44,12 @@ export class CartService {
     }
 
     getFlightsOnCart = async (cartId: number): Promise<any> => {
-
         return await this.ctx.prisma.cart.findFirst({
             where: {
                 id: Number(cartId)
             },
             include: {
+                // @ts-ignore
                 flights: true
             }
         })
@@ -60,7 +69,7 @@ export class CartService {
     }
 
 
-    addFlightToCart = async (flight: any, cartId: number): Promise<any> => {
+    addFlightToCart = async (flightId: number, cartId: number): Promise<any> => {
         return await this.ctx.prisma.cart.update({
             where: {
                 id: Number(cartId)
@@ -68,7 +77,7 @@ export class CartService {
             data: {
                 flights: {
                     connect: {
-                        id: Number(flight.id)
+                        id: Number(flightId)
                     }
                 }
             }
@@ -76,18 +85,13 @@ export class CartService {
     }
 
 
-    deleteFlightFromCart = async (flight: any, id: number): Promise<any> => {
+    deleteAllFlightsFromCart = async (flightId: number, id: number): Promise<any> => {
         return await this.ctx.prisma.cart.update({
             where: {
                 id: Number(id)
-            }
-            ,
+            },
             data: {
-                flights: {
-                    disconnect: {
-                        id: Number(flight.id)
-                    }
-                }
+                flights: {create: []}
             }
         })
     }

@@ -3,10 +3,10 @@ import {Flight} from "@prisma/client";
 export interface CreateOfferDTO {
     flightId: number
     flight: Flight
-    hotelId: number
+    hotelName: string
     ammountOfPeople: number
     ammoutOfNights: number
-    price: number
+    hotelPrice: number
     tax: number
     place: string
 }

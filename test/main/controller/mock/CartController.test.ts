@@ -1,25 +1,24 @@
-import {Context, createMockContext, MockContext} from "../../../config/context";
-import CartController from "../../../src/main/controller/CartController";
-import * as jsonCarts from "../../resources/carts.json";
-import {Cart} from "@prisma/client";
-import IResponse from "../../resources/IResponse";
+import {Context, createMockContext, MockContext} from "../../../../config/context";
+import CartController from "../../../../src/main/controller/CartController";
+import * as jsonCarts from "../../../resources/mockCart.json";
+import IResponse from "../../../resources/IResponse";
+import {CartDTO} from "../../../../src/main/dto/CartDTO";
 
 let mockCtx: MockContext;
 let ctx: Context;
-let carts: Cart[];
+let carts: CartDTO[];
 let cartController: CartController;
 
 beforeAll(async () => {
 
     carts = [];
-
+    // @ts-ignore
     for (const cart of jsonCarts.carts) carts.push(cart);
 });
 
 beforeEach(() => {
     mockCtx = createMockContext()
     ctx = mockCtx as unknown as Context
-
     cartController = new CartController(ctx);
 });
 
@@ -58,7 +57,7 @@ describe("Test cart controller", () => {
     it("should return a response with 400 when create cart", async () => {
         mockCtx.prisma.cart.create.mockRejectedValue({});
         const res: IResponse = new IResponse({})
-        const response = await cartController.createCart( {}, res);
+        const response = await cartController.createCart( 30, res);
         expect(response.status).toBe(400);
     })
 
@@ -74,10 +73,11 @@ describe("Test cart controller", () => {
         expect(response.status).toBe(200);
     })
 
-    it("should return a response with 200 when getting the price of items on cart", async () => {
+    it("should return a response when getting the price of items on cart", async () => {
+        mockCtx.prisma.cart.findFirst.mockRejectedValue(carts[0]);
         const res: IResponse = new IResponse({})
         const response = await cartController.getPriceOfItemsOnCart(1, res);
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(400)
     })
 
     it("should return a response with 400 when getting the price of items on cart", async () => {
@@ -93,13 +93,6 @@ describe("Test cart controller", () => {
         expect(response.status).toBe(200);
     });
 
- /* TODO
-   it('should return 400 when adding a flight to cart', async function () {
-        mockCtx.prisma.cart.findFirst.mockRejectedValue({});
-        const res: IResponse = new IResponse({})
-        const response = await cartController.addFlightToCart(4, 1, res);
-        expect(response.status).toBe(400);
-    })*/
 
     it('should return 200 when deleting a flight from cart', async function () {
         const res: IResponse = new IResponse({})
@@ -107,11 +100,4 @@ describe("Test cart controller", () => {
         expect(response.status).toBe(200);
     });
 
- /*  TODO
-   it('should return 400 when deleting a flight that does not exist', async function () {
-        mockCtx.prisma.cart.findFirst.mockRejectedValue({});
-        const res: IResponse = new IResponse({})
-        const response = await cartController.deleteFlightFromCart(9, 1, res);
-        expect(response.status).toBe(400);
-    });*/
 })

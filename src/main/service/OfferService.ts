@@ -11,7 +11,6 @@ export class OfferService {
 
     createOffer = async (offer: CreateOfferDTO): Promise<Offer> => {
         return await this.ctx.prisma.offer.create({
-            // @ts-ignore
             data: {
                 flight: {connect: {id: Number(offer.flightId)}},
                 ammountOfPeople:offer.ammountOfPeople,
@@ -19,7 +18,6 @@ export class OfferService {
                 tax: offer.tax,
                 hotelName: offer.hotelName,
                 hotelPrice: offer.hotelPrice,
-                flightPrice: offer.flightPrice,
                 place: offer.place,
             }
         })

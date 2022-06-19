@@ -8,7 +8,6 @@
       "tax":  100,
       "hotelName": "Hotel 1",
       "hotelPrice": 300,
-      "flightPrice": 300,
       "place": "Place 1"
     },
     {
@@ -19,7 +18,6 @@
       "tax":  100,
       "hotelName": "Hotel 2",
       "hotelPrice": 300,
-      "flightPrice": 300,
       "place": "Place 2"
     }
   ]

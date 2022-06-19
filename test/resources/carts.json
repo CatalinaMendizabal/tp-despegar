@@ -1,40 +1,22 @@
 {
   "carts": [
     {
-      "id": 1,
       "userId": 1,
-      "flights": [
-        {
-          "id": 1,
-          "company": "Airline 1",
-          "departureAirport": "SFO",
-          "arrivalAirport": "LAX",
-          "departureTime": "2015-01-01T12:00:00.000Z",
-          "arrivalTime": "2015-01-01T13:00:00.000Z",
-          "price": 100
-        },
-        {
-          "id": 2,
-          "company": "Airline 2",
-          "departureAirport": "SFO",
-          "arrivalAirport": "LAX",
-          "departureTime": "2015-01-01T12:00:00.000Z",
-          "arrivalTime": "2015-01-01T13:00:00.000Z",
-          "price": 200
-        }
-      ],
-      "cartFlight": [
-        {
-          "id": 1,
-          "cartId": 1,
-          "flightId": 1
-        },
-        {
-          "id": 2,
-          "cartId": 1,
-          "flightId": 2
-        }
-      ]
+      "flights": {
+        "flights": [
+          {
+            "company": "Lufthansa",
+            "departureHour": "2022-05-16T00:58:53.561Z",
+            "arrivalHour": "2022-05-17T00:58:53.561Z",
+            "departurePlace": "Paris",
+            "arrivalPlace": "Barcelona",
+            "price": 400,
+            "luggage": ["CARRY_ON", "SUITCASE"],
+            "type": "ECONOMY",
+            "offer": []
+          }
+        ]
+      }
     }
   ]
 }

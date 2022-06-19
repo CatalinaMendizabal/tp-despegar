@@ -1,23 +1,15 @@
-import * as jsonFlights from "../../resources/flights.json";
-import * as jsonProducts from "../../resources/products.json";
-import FlightService from "../../../src/main/service/FlightService";
-import ProductService from "../../../src/main/service/ProductService";
-import {Context, createMockContext, MockContext} from "../../../config/context";
+import * as jsonFlights from "../../../resources/flights.json";
+import FlightService from "../../../../src/main/service/FlightService";
+import {Context, createMockContext, MockContext} from "../../../../config/context";
 import {Flight, Product} from "@prisma/client";
 
 let mockCtx: MockContext;
 let ctx: Context;
-let products: Product[];
 let flights: Flight[];
-let productService: ProductService;
 let flightService: FlightService;
 
 beforeAll(async () => {
-    products = [];
     flights = [];
-
-    for (const product of jsonProducts.products) products.push(product);
-
     // @ts-ignore
     for (const flight of jsonFlights.flights) flights.push(flight);
 });
@@ -26,7 +18,6 @@ beforeEach(() => {
     mockCtx = createMockContext()
     ctx = mockCtx as unknown as Context
 
-    productService = new ProductService(ctx);
     flightService = new FlightService(ctx);
 });
 

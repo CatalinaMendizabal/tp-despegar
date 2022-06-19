@@ -23,11 +23,7 @@ export default class FlightService {
                 type: flight.type,
                 offer: {
                         create: []
-                },
-                CartFlight: {
-                    create: []
-                },
-                Cart: undefined
+                }
             }
         })
     }
