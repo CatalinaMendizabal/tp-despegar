@@ -18,7 +18,7 @@
 #echo 'of the previously run process (i.e. "npm start") and writes this value to'
 #echo 'the file ".pidfile".'
 set -x
-docker-compose up -d &
+/usr/local/bin/docker-compose up -d &
 sleep 1
 echo $! > .pidfile
 set +x

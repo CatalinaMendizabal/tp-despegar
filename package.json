@@ -7,7 +7,8 @@
     "test": "jest --runInBand",
     "start": "node dist/app.js",
     "build": "tsc",
-    "prestart": "npx prisma generate"
+    "prestart": "npx prisma generate",
+    "cypress:open": "cypress open"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.1",
     "@types/node": "^17.0.39",
+    "cypress": "^10.1.0",
     "jest": "^28.1.0",
     "jest-mock-extended": "^2.0.4",
     "prisma": "^3.14.0",

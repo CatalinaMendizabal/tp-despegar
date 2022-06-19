@@ -1,5 +1,6 @@
 import {Flight} from '@prisma/client';
 import {Context} from '../../../config/context';
+import {CreateFlightDTO} from "../dto/CreateFlightDTO";
 
 export default class FlightService {
     ctx: Context;
@@ -8,26 +9,23 @@ export default class FlightService {
         this.ctx = ctx;
     }
 
-    createFlight = async (flight: Flight): Promise<Flight> => {
+    createFlight = async (flight: CreateFlightDTO): Promise<Flight> => {
         return await this.ctx.prisma.flight.create({
             data: {
-                id: flight.id,
                 company: flight.company,
                 departureHour: flight.departureHour,
                 arrivalHour: flight.arrivalHour,
+                departurePlace: flight.departurePlace,
+                price: flight.price,
+                arrivalPlace: flight.arrivalPlace,
                 luggage: flight.luggage,
-                type: flight.type,
-                productId: flight.productId,
+                type: flight.type
             }
         })
     }
 
     getFlights = async (): Promise<Flight[]> => {
-        return await this.ctx.prisma.flight.findMany({
-            include: {
-                product: true,
-            }
-        })
+        return await this.ctx.prisma.flight.findMany({})
     }
 
     getFlight = async (id: number): Promise<Flight | null> => {

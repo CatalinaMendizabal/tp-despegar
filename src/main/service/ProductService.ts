@@ -25,11 +25,7 @@ export default class ProductService {
     }
 
     getProducts = async (): Promise<Product[]> => {
-        return await this.ctx.prisma.product.findMany({
-            include: {
-                flights: true,
-            }
-        })
+        return await this.ctx.prisma.product.findMany({})
     }
 
     getProduct = async (id: number): Promise<Product | null> => {

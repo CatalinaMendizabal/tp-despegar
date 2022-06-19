@@ -38,7 +38,7 @@ describe("Test Get Flights", () => {
     it('should return all flights', async () => {
         const flights = await flightService.getFlights();
         expect(flights).not.toBeNull();
-        expect(flights.length).toBe(2);
+        expect(flights.length).toBe(3);
     });
 
 });

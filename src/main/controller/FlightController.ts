@@ -1,12 +1,13 @@
 import FlightService from "../service/FlightService";
 import {Flight} from "@prisma/client";
 import {Context} from '../../../config/context';
+import {AmadeusGateway} from "../resources/AmadeusGateway";
 
 export default class FlightController {
     flightService: FlightService;
 
     constructor(ctx: Context) {
-        this.flightService =  new FlightService(ctx);
+        this.flightService = new FlightService(ctx);
     }
 
     public async createFlight(flight: Flight, res: any) {
@@ -32,6 +33,21 @@ export default class FlightController {
             const product = await this.flightService.getFlight(id);
             if (product === null) return res.status(404).json({message: "Flight not found"});
             else return res.status(200).json(product);
+        } catch (e) {
+            return res.status(400).json(e);
+        }
+    }
+
+    public async getMultiFlight(ids: { idF1: number, idF2: number }, processor: AmadeusGateway, res: any) {
+        try {
+            const f1 = await this.flightService.getFlight(ids.idF1)
+            const f2 = await this.flightService.getFlight(ids.idF2)
+            if (f1 === null || f2 === null) return res.status(404).json({message: "Flight not found"});
+            else {
+                const amadeusDto = processor.fromEntity(f1, f2)
+                if (processor.areCompatible(amadeusDto)) return res.status(200).json(amadeusDto);
+                else return res.status(404).json({message: "Flights are not compatible!"});
+            }
         } catch (e) {
             return res.status(400).json(e);
         }
