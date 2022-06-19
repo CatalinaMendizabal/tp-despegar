@@ -1,8 +1,8 @@
-import ProductController from "../../../src/main/controller/ProductController";
-import IResponse from "../../resources/IResponse";
-import {Context, createMockContext, MockContext} from "../../../config/context";
+import ProductController from "../../../../src/main/controller/ProductController";
+import IResponse from "../../../resources/IResponse";
+import {Context, createMockContext, MockContext} from "../../../../config/context";
 import {Product} from "@prisma/client";
-import * as jsonProducts from "../../resources/products.json";
+import * as jsonProducts from "../../../resources/products.json";
 
 let mockCtx: MockContext;
 let ctx: Context;

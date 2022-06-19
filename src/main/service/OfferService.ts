@@ -12,7 +12,16 @@ export class OfferService {
     createOffer = async (offer: CreateOfferDTO): Promise<Offer> => {
         return await this.ctx.prisma.offer.create({
             // @ts-ignore
-            data: offer
+            data: {
+                flight: {connect: {id: Number(offer.flightId)}},
+                ammountOfPeople:offer.ammountOfPeople,
+                ammoutOfNights:offer.ammoutOfNights,
+                tax: offer.tax,
+                hotelName: offer.hotelName,
+                hotelPrice: offer.hotelPrice,
+                flightPrice: offer.flightPrice,
+                place: offer.place,
+            }
         })
     }
 
@@ -43,7 +52,6 @@ export class OfferService {
     searchOfferByPlaceName = async (place: string): Promise<Offer[]> => {
           return await this.ctx.prisma.offer.findMany({
             where: {
-                // @ts-ignore
                 place: place
             }
         })
