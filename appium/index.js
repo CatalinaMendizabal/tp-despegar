@@ -17,12 +17,18 @@ async function main () {
     const client = await wdio.remote(opts);
     console.log("client: ", client);
     //const field = await $$('com.gm.despegar:id/countryName')
+    client.refresh;
     console.log(client.findElement);
-    const field = await client.$('com.gm.despegar:id/countryName')
-    console.log("field: ", field)
-    const value = await field.getText();
-    console.log(value);
-    assert.strictEqual(value,"Argentina");
+    const field = await client.$$("android.widget.FrameLayout")
+    console.log("field: ",field);
+    const field2 = await client.$$("android.widget.LinearLayout");
+    console.log("field2: ",field2);
+
+    const field23ViewGroup = await client.$$("id:com.gm.despegar:id/countryName");
+    console.log("Names: ",field23ViewGroup);
+
+
+    assert.strictEqual(field3,"Argentina");
     await client.deleteSession();
 
 }
