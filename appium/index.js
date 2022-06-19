@@ -7,7 +7,7 @@ const opts = {
         platformName: "Android",
         platformVersion: "8",
         deviceName: "emulator-5554",
-        app: "/Users/JoseRojas/Projects/aseguramiento/tp-despegar/appium/apk/despegar.apk",
+        app: "/Users/tefiporacchia/Proyects/tp-despegar/appium/apk/despegar.apk",
         appPackage: "com.gm.despegar",
         appActivity: "com.despegar.ui.splash.SplashActivity",
         automationName: "UiAutomator2"
