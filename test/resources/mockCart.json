@@ -1,0 +1,9 @@
+{
+  "carts": [
+    {
+      "cartId": "1",
+      "userId": 1,
+      "flights": [1, 2]
+    }
+  ]
+}

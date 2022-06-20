@@ -5,10 +5,12 @@
       "company": "Lufthansa",
       "departureHour": "2022-05-16T00:58:53.561Z",
       "arrivalHour": "2022-05-17T00:58:53.561Z",
+      "price": 400,
       "departurePlace": "Buenos Aires",
       "arrivalPlace": "Paris",
       "luggage": ["CARRY_ON", "SUITCASE"],
-      "type": "ECONOMY"
+      "type": "ECONOMY",
+      "cartId": 1
     },
     {
       "id": 6,
@@ -17,8 +19,10 @@
       "arrivalHour": "2022-05-17T00:58:53.561Z",
       "departurePlace": "Paris",
       "arrivalPlace": "Barcelona",
+      "price": 400,
       "luggage": ["CARRY_ON", "SUITCASE"],
-      "type": "ECONOMY"
+      "type": "ECONOMY",
+      "offer": []
     },
     {
       "id": 2,
@@ -27,8 +31,10 @@
       "arrivalHour": "2022-05-17T00:58:53.561Z",
       "departurePlace": "Paris",
       "arrivalPlace": "Barcelona",
+      "price": 400,
       "luggage": ["CARRY_ON", "SUITCASE"],
-      "type": "ECONOMY"
+      "type": "ECONOMY",
+      "offer": []
     }
   ]
 }

@@ -7,6 +7,7 @@ export interface CreateFlightDTO {
     arrivalHour: Date
     departurePlace: string
     arrivalPlace: string
+    price: number
     luggage: Luggage[]
     type: ClassType
 }
@@ -19,6 +20,7 @@ export interface FlightDTO {
     arrivalHour: Date
     departurePlace: string
     arrivalPlace: string
+    price: number
     luggage: Luggage[]
     type: ClassType
 }

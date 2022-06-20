@@ -1,0 +1,22 @@
+{
+  "carts": [
+    {
+      "userId": 1,
+      "flights": {
+        "flights": [
+          {
+            "company": "Lufthansa",
+            "departureHour": "2022-05-16T00:58:53.561Z",
+            "arrivalHour": "2022-05-17T00:58:53.561Z",
+            "departurePlace": "Paris",
+            "arrivalPlace": "Barcelona",
+            "price": 400,
+            "luggage": ["CARRY_ON", "SUITCASE"],
+            "type": "ECONOMY",
+            "offer": []
+          }
+        ]
+      }
+    }
+  ]
+}

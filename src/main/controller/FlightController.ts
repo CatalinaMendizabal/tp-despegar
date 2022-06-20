@@ -1,7 +1,6 @@
 import FlightService from "../service/FlightService";
 import {Flight} from "@prisma/client";
 import {Context} from '../../../config/context';
-import {AmadeusRequestDTO} from "../dto/AmadeusRequestDTO";
 import {AmadeusGateway} from "../resources/AmadeusGateway";
 
 export default class FlightController {

@@ -1,6 +1,7 @@
 import {Flight} from '@prisma/client';
 import {Context} from '../../../config/context';
 import {CreateFlightDTO} from "../dto/CreateFlightDTO";
+import {create} from "domain";
 
 export default class FlightService {
     ctx: Context;
@@ -16,9 +17,13 @@ export default class FlightService {
                 departureHour: flight.departureHour,
                 arrivalHour: flight.arrivalHour,
                 departurePlace: flight.departurePlace,
+                price: flight.price,
                 arrivalPlace: flight.arrivalPlace,
                 luggage: flight.luggage,
-                type: flight.type
+                type: flight.type,
+                offer: {
+                        create: []
+                }
             }
         })
     }
