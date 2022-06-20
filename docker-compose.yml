@@ -18,7 +18,7 @@ services:
     image: despegar/api
     container_name: "despegar-api"
     depends_on:
-      - postgres
+      - despegar-db
     build:
       context: ./
       dockerfile: Dockerfile
