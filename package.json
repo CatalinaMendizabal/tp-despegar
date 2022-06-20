@@ -1,11 +1,11 @@
 {
   "name": "tp-despegar",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "node dist/app.js",
+    "start": "node dist/src/app.js",
     "build": "tsc",
     "prestart": "npx prisma migrate dev --name init",
     "cypress:open": "cypress open"
