@@ -7,25 +7,19 @@ class WebsiteUser(HttpUser):
 
     @task
     def primaryProducts_url(self):
-        self.client.get(url="/products")
+        self.client.get(url="/offers")
 
     @task
     def primaryFlights_url(self):
         self.client.get(url="/flights")
 
     @task
-    def secondaryProducts_url(self):
-        self.client.get(url="/products/idEjemplo")
+    def primaryCart_url(self):
+        self.client.get(url="/cart")
 
-    @task
-    def secondaryFlights_url(self):
-        self.client.get(url="/flights/idEjemplo")
 
-    @task
-    def tertiary_url(self):
-        self.client.get(url="/flights/multiflight")
 
-         #tunear la url segun la que necesitemos pegarle n3 ^
+
 
 
 
